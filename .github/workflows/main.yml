@@ -14,11 +14,30 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+
   build:
-# Build python script into a stand-alone exe
-    runs_on: windows-latest
+    # Windows is currently the only platform this action supports
+    runs-on: windows-latest
+
     steps:
+    
+      # Check-out repository
+      - uses: actions/checkout@v3
+
+      # Setup Python
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+
+      # Build python script into a stand-alone exe
       - uses: jimkring/python-script-to-executable@v0.2.0
-      with:
+        with:
           script-name: hello_world.py
+
+      # Uploads artifact
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: exe
+          path: build/hello_world.exe
