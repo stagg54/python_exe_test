@@ -17,6 +17,8 @@ jobs:
   # This workflow contains a single job called "build"
   build:
 # Build python script into a stand-alone exe
-    - uses: jimkring/python-script-to-executable@v0.2.0
-    with:
-      script-name: hello_world.py
+    runs_on: windows-latest
+    steps:
+      - uses: jimkring/python-script-to-executable@v0.2.0
+      with:
+          script-name: hello_world.py
